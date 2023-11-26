@@ -25,17 +25,30 @@ namespace Number_Converter_App
 
         static void Main(string[] args)
         {
-            
+            startApp();
+        }
+
+        // StartApp function will make sure it goes well all the way untill we reach out the main menu
+        // Main menu will take over from there
+        private static void startApp()
+        {
+            isFirstProgramRun = true;
+
             selectLanguageMenu();
             delaySeconds(3);
 
             welcomeMessage();
-            delaySeconds(3);
+            delaySeconds(5);
 
             mainMenu();
-            delaySeconds(3);
-
-
+        }
+        // StopApp function will display the goodbye message give it a nice delay and than clear then console and end the app 
+        private static void stopApp()
+        {
+            goodbyeMessage();
+            delaySeconds(10);
+            Console.Clear();
+            Environment.Exit(0);
         }
 
 
@@ -175,6 +188,8 @@ namespace Number_Converter_App
             consoleBoxMainTextContentList.Add("[1] English / Englenski");
             consoleBoxMainTextContentList.Add("[2] Srpski / Serbian");
 
+            Console.WriteLine();
+            Console.WriteLine();
             consoleBoxBuilder(consoleLineWidth, header, consoleBoxMainTextContentList, footer, false);
 
             Console.Write(userInputInstructions);
@@ -325,7 +340,8 @@ namespace Number_Converter_App
             {
                 case 1:
                     // restart app
-                    // startApp();
+                    delaySeconds(4);
+                    startApp();
                     break;
 
                 case 2:
@@ -343,7 +359,8 @@ namespace Number_Converter_App
 
 
                 case 6:
-                    // stopApp();
+                    // stop the app
+                    stopApp();
                     break;
 
             }
