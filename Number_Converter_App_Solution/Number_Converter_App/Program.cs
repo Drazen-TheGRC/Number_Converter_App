@@ -28,8 +28,14 @@ namespace Number_Converter_App
             
             selectLanguageMenu();
             delaySeconds(3);
+
             welcomeMessage();
-            
+            delaySeconds(3);
+
+            mainMenu();
+            delaySeconds(3);
+
+
         }
 
 
@@ -74,6 +80,8 @@ namespace Number_Converter_App
 
             consoleBoxBuilder(consoleLineWidth, header, consoleBoxMainTextContentList, footer, true);
         }
+
+        
 
 
         // Console builder methods
@@ -276,6 +284,70 @@ namespace Number_Converter_App
                 Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Unijeli ste: >   " + userInputString + "   < sto NIJE valjana opcija   <<<", '-', '-', true));
                 Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Molim pokusajte ponovo   <<<", '-', '-', true));
             }
+        }
+
+
+
+
+        private static void mainMenuMessage()
+        {
+            string header = isEnglish ? "[ Main Menu ]" : "[ Glavni Meni ]";
+            string userInputInstructions = isEnglish ? "Enter your choice here: " : "Upišite vas izbor ovdje: ";
+            string footer = isEnglish ? "[ Please Enter Your Choice Below ]" : "[ Molim Unesite Vas Izbor Ispod ]";
+
+            List<string> consoleBoxMainTextContentList = new List<string>();
+            consoleBoxMainTextContentList.Add(isEnglish ? "[1] Reset App" : "[1] Pokreni iz pocetka");
+            consoleBoxMainTextContentList.Add("");
+            consoleBoxMainTextContentList.Add(isEnglish ? "[2] Binary Converter" : "[2] Binarni Konverter");
+            consoleBoxMainTextContentList.Add(isEnglish ? "[3] Octal Converter" : "[3] Oktalni Konverter");
+            consoleBoxMainTextContentList.Add(isEnglish ? "[4] Decimal Converter" : "[4] Decimalni Konverter");
+            consoleBoxMainTextContentList.Add(isEnglish ? "[5] Hexadecimal Converter" : "[5] Hexadecimalni Konverter");
+            consoleBoxMainTextContentList.Add("");
+            consoleBoxMainTextContentList.Add(isEnglish ? "[6] Exit App" : "[6] Ugasi Aplikaciju");
+
+
+            consoleBoxBuilder(consoleLineWidth, header, consoleBoxMainTextContentList, footer, false);
+
+            Console.Write(userInputInstructions);
+        }
+        private static void mainMenu()
+        {
+            int min = 1;
+            int max = 6;
+            mainMenuMessage();
+            int selection = 0;
+            while (selection == 0)
+            {
+                selection = userInputForMenu(min, max);
+            }
+
+            switch (selection)
+            {
+                case 1:
+                    // restart app
+                    // startApp();
+                    break;
+
+                case 2:
+                    // binaryConverterMenu();
+                    break;
+                case 3:
+                    // octalConverterMenu();
+                    break;
+                case 4:
+                    // decimalConverterMenu();
+                    break;
+                case 5:
+                    // hexadecimalConverterMenu();
+                    break;
+
+
+                case 6:
+                    // stopApp();
+                    break;
+
+            }
+
         }
 
 
