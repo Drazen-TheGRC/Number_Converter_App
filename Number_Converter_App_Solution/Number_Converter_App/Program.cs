@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Number_Converter_App
@@ -22,9 +23,28 @@ namespace Number_Converter_App
         static void Main(string[] args)
         {
             welcomeMessage();
+            delaySeconds(3);
+            goodbyeMessage();
         }
 
 
+        // Delay method
+        private static void delaySeconds(int numberOfSeconds)
+        {
+            int countdown = numberOfSeconds - 1;
+            for (int i = 0; i < numberOfSeconds; i++)
+            {
+                Console.WriteLine((isEnglish ? "Starts in: " : "Pocinje za: ") + countdown.ToString());
+                Thread.Sleep(1000);
+                countdown--;
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+            }
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+
+            Console.WriteLine();
+        }
+        // Welcome 
         private static void welcomeMessage()
         {
             string header = isEnglish ? "[ Welcome ]" : "[ Dobrodosli ]";
@@ -38,8 +58,20 @@ namespace Number_Converter_App
 
             consoleBoxBuilder(consoleLineWidth, header, consoleBoxMainTextContentList, footer, false);
         }
+        // Goodbye
+        private static void goodbyeMessage()
+        {
+            string header = isEnglish ? "[ Goodbye ]" : "[ Dovidjenja ]";
+            string footer = isEnglish ? "***" : "***";
+            List<string> consoleBoxMainTextContentList = new List<string>();
+            consoleBoxMainTextContentList.Add((isEnglish ? "Thanks for trying my app!!!" : "Hvala sto ste isprobali moju aplikaciju!!!"));
+            consoleBoxMainTextContentList.Add((isEnglish ? "See you next time!!!" : "Vidimo se sledeci put!!!"));
+
+            consoleBoxBuilder(consoleLineWidth, header, consoleBoxMainTextContentList, footer, true);
+        }
 
 
+        // Console builder methods
         private static void consoleBoxHeaderBuilder(string headerLine)
         {
             // Empty line above the console box
@@ -117,6 +149,9 @@ namespace Number_Converter_App
         }
 
 
+
+
+        
 
 
 
