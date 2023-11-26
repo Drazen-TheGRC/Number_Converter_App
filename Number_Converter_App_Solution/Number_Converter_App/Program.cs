@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace Number_Converter_App
     {
         // Checks if the language is set to English, if true ternary operator will use English text inline if false it will assign Serbian language
         static bool isEnglish;
+        // Checks if the consol app just started, it controles App Language selection
+        static bool isFirstProgramRun = true;
         // Consol box width 
         static int consoleLineWidth = 100;
 
@@ -22,9 +25,11 @@ namespace Number_Converter_App
 
         static void Main(string[] args)
         {
-            welcomeMessage();
+            
+            selectLanguageMenu();
             delaySeconds(3);
-            goodbyeMessage();
+            welcomeMessage();
+            
         }
 
 
@@ -151,13 +156,127 @@ namespace Number_Converter_App
 
 
 
-        
+        // Select language methods
+        private static void selectLanguageMenuMessage()
+        {
+            string header = "[ Language selection / Izbor Jezika ]";
+            string userInputInstructions = "Enter your choice here / Upišite vas izbor ovdje: ";
+            string footer = "[ Please Enter Your Choice Below / Molim Unesite Vas Izbor Ispod ]";
 
+            List<string> consoleBoxMainTextContentList = new List<string>();
+            consoleBoxMainTextContentList.Add("[1] English / Englenski");
+            consoleBoxMainTextContentList.Add("[2] Srpski / Serbian");
 
+            consoleBoxBuilder(consoleLineWidth, header, consoleBoxMainTextContentList, footer, false);
 
+            Console.Write(userInputInstructions);
+        }
+        private static void selectLanguageMenu()
+        {
+            // Add menu min choice option (most likely it will be always one)
+            int min = 1;
+            // Add menu max choice option
+            int max = 2;
 
+            // Display a message in the console for user prior asking for input
+            selectLanguageMenuMessage();
 
+            // waiting for the user to enter a valid selection and repeating it until the user enters a valid option
+            // The userInputForMenu will take care of invalid inputs
+            int selection = 0;
+            while (selection==0)
+            {
+                selection = userInputForMenu(min, max);
+            }
 
+            // Decision making related to the user choice
+            switch (selection)
+            {
+                case 1:
+                    isEnglish = true;
+                    Console.WriteLine();
+                    goodInputMessage(selection.ToString());
+                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   App language is set to English   <<<", '-', '-', true));
+                    Console.WriteLine();
+                    break;
+                case 2:
+                    isEnglish = false;
+                    Console.WriteLine();
+                    goodInputMessage(selection.ToString());
+                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Jezik aplikacije je podešen na Srpski   <<<", '-', '-', true));
+                    Console.WriteLine();
+                    break;
+            }
+        }
+
+        // User input for menu options selection only
+        private static int userInputForMenu(int min, int max)
+        {
+            int userInput = 0;
+            string userInputString = Console.ReadLine();
+
+            Regex regex = new Regex($"^[{min}-{max}]$");
+            if (regex.IsMatch(userInputString))
+            {
+                userInput = Int32.Parse(userInputString);
+
+                if (isFirstProgramRun)
+                {
+                    isFirstProgramRun = false;
+                }
+            }
+            else
+            {
+                if (isFirstProgramRun)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   You entered: >   " + userInputString + "   < which is NOT a valid option   <<<", '-', '-', true));
+                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Unijeli ste: >   " + userInputString + "   < sto NIJE valjana opcija   <<<", '-', '-', true));
+                    Console.WriteLine();
+                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Please try again   <<<", '-', '-', true));
+                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Molim pokusajte ponovo   <<<", '-', '-', true));
+                    Console.WriteLine();
+                    Console.Write("Enter your choice here / Upišite vas izbor ovdje: ");
+                }
+                else
+                {
+                    Console.WriteLine();
+                    badInputMessage(userInputString);
+                    Console.WriteLine();
+                    Console.Write(isEnglish ? "Enter your choice here: " : "Upišite vas izbor ovdje: ");
+                }
+            }
+
+            return userInput;
+        }
+        // Good input 
+        private static void goodInputMessage(string userInputString)
+        {
+            if (isEnglish)
+            {
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   You entered: >   " + userInputString + "   < which is a valid option   <<<", '-', '-', true));
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Thanks For Your Input   <<<", '-', '-', true));
+            }
+            else
+            {
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Unijeli ste: >   " + userInputString + "   < sto je valjana opcija   <<<", '-', '-', true));
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Hvala na unosu   <<<", '-', '-', true));
+            }
+        }
+        // Bad input
+        private static void badInputMessage(string userInputString)
+        {
+            if (isEnglish)
+            {
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   You entered: >   " + userInputString + "   < which is NOT a valid option   <<<", '-', '-', true));
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Please try again   <<<", '-', '-', true));
+            }
+            else
+            {
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Unijeli ste: >   " + userInputString + "   < sto NIJE valjana opcija   <<<", '-', '-', true));
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Molim pokusajte ponovo   <<<", '-', '-', true));
+            }
+        }
 
 
 
