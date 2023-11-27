@@ -5,3 +5,10 @@ C:\Users\TheGRC\Documents\C# Projects\Number_Converter_App\Number_Converter_App_
 C:\Users\TheGRC\Documents\C# Projects\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\obj\Debug\Number_Converter_App.csproj.CoreCompileInputs.cache
 C:\Users\TheGRC\Documents\C# Projects\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\obj\Debug\Number_Converter_App.exe
 C:\Users\TheGRC\Documents\C# Projects\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\obj\Debug\Number_Converter_App.pdb
+C:\Users\Korisnik\Documents\GitHub\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\bin\Debug\Number_Converter_App.exe.config
+C:\Users\Korisnik\Documents\GitHub\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\bin\Debug\Number_Converter_App.exe
+C:\Users\Korisnik\Documents\GitHub\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\bin\Debug\Number_Converter_App.pdb
+C:\Users\Korisnik\Documents\GitHub\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\obj\Debug\Number_Converter_App.csproj.AssemblyReference.cache
+C:\Users\Korisnik\Documents\GitHub\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\obj\Debug\Number_Converter_App.csproj.CoreCompileInputs.cache
+C:\Users\Korisnik\Documents\GitHub\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\obj\Debug\Number_Converter_App.exe
+C:\Users\Korisnik\Documents\GitHub\Number_Converter_App\Number_Converter_App_Solution\Number_Converter_App\obj\Debug\Number_Converter_App.pdb
