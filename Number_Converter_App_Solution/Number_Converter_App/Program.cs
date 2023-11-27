@@ -405,15 +405,349 @@ namespace Number_Converter_App
                     break;
                 case 2:
                     
-                    // decimalConverter();
+                    decimalConverter();
                     break;
             }
+
+        }
+
+        private static int inputDecimal()
+        {
+            int userInput = 0;
+
+            Console.WriteLine();
+            // I added a limit so as not to cause issues on two ends, firstly I don't want the number of digits to mess up my presentation in the console,
+            //Secondly I want to make sure the number fits into the int32. Why 16777215 because it is 8 digits long and it is the largest number in hexadecimal equivalent FFFFFF
+            Console.Write(isEnglish ? "Please enter a decimal number less than 16777215: " : "Molim vas upišite decimalni broj manji od 16777215: ");
+
+            string userInputString = Console.ReadLine();
+
+            Regex regex = new Regex($"^[0-9]+$");
+            if (regex.IsMatch(userInputString))
+            {
+
+
+                try
+                {
+                    userInput = Int32.Parse(userInputString);
+                    if (userInput > 16777215)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, isEnglish ? ">>>   There was an error, App will start from the previus menu   <<<" : ">>>   Dogodila se greška, applikacija će se nastaviti od predgodnog menija   <<<", '-', '-', true));
+                        Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, isEnglish ? ">>>   Please try again   <<<" : ">>>   Molim pokusajte ponovo   <<<", '-', '-', true));
+                        Console.WriteLine();
+                        decimalConverterMenu();
+
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, isEnglish ? ">>>   There was an error, App will start from the previus menu   <<<" : ">>>   Dogodila se greška, applikacija će se nastaviti od predgodnog menija   <<<", '-', '-', true));
+                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, isEnglish ? ">>>   Please try again   <<<" : ">>>   Molim pokusajte ponovo   <<<", '-', '-', true));
+                    Console.WriteLine();
+                    decimalConverterMenu();
+                }
+
+                Console.WriteLine();
+                goodInputMessage(userInputString);
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine();
+                badInputMessage(userInputString);
+                Console.WriteLine();
+                inputDecimal();
+            }
+
+            return userInput;
+        }
+
+
+
+        private static void decimalNumberConversionExplanation()
+        {
+            string header = isEnglish ? "[ Decimal Converter ]" : "[ Decimalni Konverter ]";
+            string footer = isEnglish ? "[ Enter a decimal number below ]" : "[ Upišite decimalni broj u nastavku ]";
+
+            List<string> consoleBoxMainTextContentList = new List<string>();
+            consoleBoxMainTextContentList.Add(isEnglish ? "explain decimal conversions " : "objasniti konverzije decimalnog broja");
+            consoleBoxMainTextContentList.Add(isEnglish ? "" : "");
+            consoleBoxMainTextContentList.Add(isEnglish ? "" : "");
+            consoleBoxMainTextContentList.Add(isEnglish ? "" : "");
+
+            consoleBoxBuilder(consoleLineWidth, header, consoleBoxMainTextContentList, footer, false);
+        }
+        private static void decimalConverter()
+        {
+            decimalNumberConversionExplanation();
+
+            int decimalNumber = inputDecimal();
+
+            {
+                string header = isEnglish ? "[ Conversion of a Decimal to a Binary number ]" : "[ Konverzija Decimalnog u Binarni broj ]";
+                string footer = isEnglish ? "[ ***** ]" : "[ ***** ]";
+
+
+                consoleBoxBuilder(consoleLineWidth, header, decimalToBinary(decimalNumber), footer, false);
+            }
+            {
+                string header = isEnglish ? "[ Conversion of a Decimal to an Octal number ]" : "[ Konverzija Decimalnog u Oktalni broj ]";
+                string footer = isEnglish ? "[ ***** ]" : "[ ***** ]";
+                consoleBoxBuilder(consoleLineWidth, header, decimalToOctal(decimalNumber), footer, false);
+            }
+            {
+                string header = isEnglish ? "[ Conversion of a Decimal to a Hexadecimal number ]" : "[ Konverzija Decimalnog u Heksadecimalni broj ]";
+                string footer = isEnglish ? "[ ***** ]" : "[ ***** ]";
+                consoleBoxBuilder(consoleLineWidth, header, decimalToHexadecimal(decimalNumber), footer, false);
+            }
+
+            decimalConverterMenu();
+
 
         }
 
 
 
 
+        private static List<string> decimalToBinary(int decimalNumberInput)
+        {
+            int decimalNumber = decimalNumberInput;
+            int result;
+            int reminder;
+            int newDecimal = decimalNumber;
+
+            string conversionResult = "";
+            string endText;
+
+
+
+            List<string> consoleBoxMainTextContentList = new List<string>();
+
+            while (newDecimal > 0)
+            {
+                reminder = newDecimal % 2;
+                result = newDecimal / 2;
+
+                conversionResult = conversionResult.Insert(0, reminder.ToString());
+
+                if (newDecimal == decimalNumber)
+                {
+                    endText = "^ LSB";
+                }
+                else if (result > 0)
+                {
+                    endText = "|";
+                }
+                else
+                {
+                    endText = "| MSB";
+                }
+
+
+                string conversionLine = newDecimal.ToString();
+
+                conversionLine += new string(' ', 8 - conversionLine.Length);
+                conversionLine += "÷";
+
+                conversionLine += new string(' ', 16 - conversionLine.Length);
+                conversionLine += "2";
+
+                conversionLine += new string(' ', 24 - conversionLine.Length);
+                conversionLine += "=";
+
+                conversionLine += new string(' ', 32 - conversionLine.Length);
+                conversionLine += result.ToString();
+
+                conversionLine += new string(' ', 40 - conversionLine.Length);
+                conversionLine += "R = " + reminder.ToString();
+
+                conversionLine += new string(' ', 48 - conversionLine.Length);
+                conversionLine += endText;
+
+                newDecimal = result;
+
+                consoleBoxMainTextContentList.Add(conversionLine);
+            }
+
+            consoleBoxMainTextContentList.Add("");
+            string decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+            consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
+            string binaryString = isEnglish ? "Binary number : " : "Binarni broj : ";
+            consoleBoxMainTextContentList.Add(binaryString + new string(' ', 20 - binaryString.Length) + conversionResult);
+
+            return consoleBoxMainTextContentList;
+        }
+        private static List<string> decimalToOctal(int decimalNumberInput)
+        {
+            int decimalNumber = decimalNumberInput;
+            int result;
+            int reminder;
+            int newDecimal = decimalNumber;
+
+            string conversionResult = "";
+            string endText;
+
+
+
+            List<string> consoleBoxMainTextContentList = new List<string>();
+
+            while (newDecimal > 0)
+            {
+                reminder = newDecimal % 8;
+                result = newDecimal / 8;
+
+                conversionResult = conversionResult.Insert(0, reminder.ToString());
+
+                if (newDecimal == decimalNumber)
+                {
+                    endText = "^ LSB";
+                }
+                else if (result > 0)
+                {
+                    endText = "|";
+                }
+                else
+                {
+                    endText = "| MSB";
+                }
+
+
+                string conversionLine = newDecimal.ToString();
+
+                conversionLine += new string(' ', 8 - conversionLine.Length);
+                conversionLine += "÷";
+
+                conversionLine += new string(' ', 16 - conversionLine.Length);
+                conversionLine += "8";
+
+                conversionLine += new string(' ', 24 - conversionLine.Length);
+                conversionLine += "=";
+
+                conversionLine += new string(' ', 32 - conversionLine.Length);
+                conversionLine += result.ToString();
+
+                conversionLine += new string(' ', 40 - conversionLine.Length);
+                conversionLine += "R = " + reminder.ToString();
+
+                conversionLine += new string(' ', 48 - conversionLine.Length);
+                conversionLine += endText;
+
+                newDecimal = result;
+
+                consoleBoxMainTextContentList.Add(conversionLine);
+            }
+
+            consoleBoxMainTextContentList.Add("");
+            string decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+            consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
+            string octaString = isEnglish ? "Octal number : " : "Oktalni broj : ";
+            consoleBoxMainTextContentList.Add(octaString + new string(' ', 20 - octaString.Length) + conversionResult);
+
+            return consoleBoxMainTextContentList;
+        }
+        private static List<string> decimalToHexadecimal(int decimalNumberInput)
+        {
+            int decimalNumber = decimalNumberInput;
+            int result;
+            int reminder;
+
+            string reminderString;
+
+            int newDecimal = decimalNumber;
+
+            string conversionResult = "";
+            string endText;
+
+
+
+            List<string> consoleBoxMainTextContentList = new List<string>();
+
+            while (newDecimal > 0)
+            {
+                reminder = newDecimal % 16;
+                result = newDecimal / 16;
+
+                if (reminder == 15)
+                {
+                    reminderString = "F";
+                }
+                else if (reminder == 14)
+                {
+                    reminderString = "E";
+                }
+                else if (reminder == 13)
+                {
+
+                    reminderString = "D";
+                }
+                else if (reminder == 12)
+                {
+                    reminderString = "C";
+                }
+                else if (reminder == 11)
+                {
+                    reminderString = "B";
+                }
+                else if (reminder == 10)
+                {
+                    reminderString = "A";
+                }
+                else
+                {
+                    reminderString = reminder.ToString();
+                }
+
+                conversionResult = conversionResult.Insert(0, reminderString);
+
+                if (newDecimal == decimalNumber)
+                {
+                    endText = "^ LSB";
+                }
+                else if (result > 0)
+                {
+                    endText = "|";
+                }
+                else
+                {
+                    endText = "| MSB";
+                }
+
+
+                string conversionLine = newDecimal.ToString();
+
+                conversionLine += new string(' ', 8 - conversionLine.Length);
+                conversionLine += "÷";
+
+                conversionLine += new string(' ', 16 - conversionLine.Length);
+                conversionLine += "16";
+
+                conversionLine += new string(' ', 24 - conversionLine.Length);
+                conversionLine += "=";
+
+                conversionLine += new string(' ', 32 - conversionLine.Length);
+                conversionLine += result.ToString();
+
+                conversionLine += new string(' ', 40 - conversionLine.Length);
+                conversionLine += "R = " + reminder.ToString() + (reminder > 9 ? " -> " + reminderString : "  -> " + reminder.ToString());
+
+                conversionLine += new string(' ', 54 - conversionLine.Length);
+                conversionLine += endText;
+
+                newDecimal = result;
+
+                consoleBoxMainTextContentList.Add(conversionLine);
+            }
+
+            consoleBoxMainTextContentList.Add("");
+            string decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+            consoleBoxMainTextContentList.Add(decString + new string(' ', 24 - decString.Length) + decimalNumber.ToString());
+            string hexaString = isEnglish ? "Hexadecimal number : " : "Heksadecimalni broj : ";
+            consoleBoxMainTextContentList.Add(hexaString + new string(' ', 24 - hexaString.Length) + conversionResult);
+
+            return consoleBoxMainTextContentList;
+        }
 
 
 
