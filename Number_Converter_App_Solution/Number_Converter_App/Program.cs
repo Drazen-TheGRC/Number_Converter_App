@@ -35,10 +35,10 @@ namespace Number_Converter_App
             isFirstProgramRun = true;
 
             selectLanguageMenu();
-            delaySeconds(3);
+            //delaySeconds(3);
 
-            welcomeMessage();
-            delaySeconds(5);
+            //welcomeMessage();
+            //delaySeconds(5);
 
             mainMenu();
         }
@@ -411,9 +411,9 @@ namespace Number_Converter_App
 
         }
 
-        private static double inputDecimal()
+        private static decimal inputDecimal()
         {
-            double userInput = 0;
+            decimal userInput = 0;
 
             Console.WriteLine();
             // I added a limit so as not to cause issues on two ends, firstly I don't want the number of digits to mess up my presentation in the console,
@@ -422,13 +422,13 @@ namespace Number_Converter_App
 
             string userInputString = Console.ReadLine();
 
-            string regexPattern = @"^([0-9]{0,8})(\.[0-9]{1,6})?$";
+            string regexPattern = @"^([0-9]{0,8})(\.[0-9]{1,5})?$";
             Regex regex = new Regex(regexPattern);
             if (regex.IsMatch(userInputString))
             {
                 try
                 {
-                    userInput = double.Parse(userInputString);
+                    userInput = decimal.Parse(userInputString);
                     if (userInput > 16777215 && userInput <= 0)
                     {
                         Console.WriteLine();
@@ -454,10 +454,14 @@ namespace Number_Converter_App
             }
             else
             {
+
+                // We need to say there was an error the app will go back for one menu
                 Console.WriteLine();
                 badInputMessage(userInputString);
                 Console.WriteLine();
                 inputDecimal();
+
+                
             }
 
             return userInput;
@@ -482,7 +486,7 @@ namespace Number_Converter_App
         {
             decimalNumberConversionExplanation();
 
-            double decimalNumber = inputDecimal();
+            decimal decimalNumber = inputDecimal();
 
             {
                 string header = isEnglish ? "[ Conversion of a Decimal to a Binary number ]" : "[ Konverzija Decimalnog u Binarni broj ]";
@@ -510,12 +514,12 @@ namespace Number_Converter_App
 
 
 
-        private static List<string> decimalToBinary(double decimalNumberInput)
+        private static List<string> decimalToBinary(decimal decimalNumberInput)
         {
-            double decimalNumber = decimalNumberInput;
+            decimal decimalNumber = decimalNumberInput;
 
             int integralPart = (int)decimalNumber;
-            double fractionalPart = decimalNumber - integralPart;
+            decimal fractionalPart = decimalNumber - integralPart;
 
 
             // used for calculations of the integralPart
@@ -523,12 +527,12 @@ namespace Number_Converter_App
             int reminderForIntegralPart;
 
             // used for the calculations of the fractionalPart
-            double resultForFractionalPart;
+            decimal resultForFractionalPart;
             int reminderForFractionalPart;
 
 
             int tempIntegralPart = integralPart;
-            double tempFractionalPart = fractionalPart;
+            decimal tempFractionalPart = fractionalPart;
 
             string conversionResult = "";
             string endText;
@@ -593,9 +597,11 @@ namespace Number_Converter_App
             consoleBoxMainTextContentList.Add("Calculating the Fractional Part of the number: ");
             consoleBoxMainTextContentList.Add("");
 
-            while (tempFractionalPart != 0)
+            int repetitions = 0;
+
+            for(int i = 5; i > 0; i--)
             {
-                resultForFractionalPart = tempFractionalPart * 2;
+                resultForFractionalPart = (tempFractionalPart * 2);
 
                 if (resultForFractionalPart >= 1)
                 {
@@ -663,7 +669,11 @@ namespace Number_Converter_App
 
                 consoleBoxMainTextContentList.Add(conversionLine);
 
-
+                // Breaks the loop in case tempFractionalPart == 0, that means there is no need to keep calculating
+                if (tempFractionalPart == 0)
+                {
+                    break;
+                }
 
 
 
