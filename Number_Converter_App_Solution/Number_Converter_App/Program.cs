@@ -232,6 +232,7 @@ namespace Number_Converter_App
             }
         }
 
+        // User User input for menus functions
         // User input for menu options selection only
         private static int userInputForMenu(int min, int max)
         {
@@ -303,7 +304,7 @@ namespace Number_Converter_App
 
 
 
-
+        // Main menu functions
         private static void mainMenuMessage()
         {
             string header = isEnglish ? "[ Main Menu ]" : "[ Glavni Meni ]";
@@ -340,7 +341,7 @@ namespace Number_Converter_App
             {
                 case 1:
                     // restart app
-                    delaySeconds(4);
+                    delaySeconds(3);
                     startApp();
                     break;
 
@@ -351,7 +352,7 @@ namespace Number_Converter_App
                     // octalConverterMenu();
                     break;
                 case 4:
-                    // decimalConverterMenu();
+                    decimalConverterMenu();
                     break;
                 case 5:
                     // hexadecimalConverterMenu();
@@ -368,7 +369,47 @@ namespace Number_Converter_App
         }
 
 
+        // Decimal number conversion methods
+        // 
 
+        private static void decimalConverterMenuMessage()
+        {
+            string header = isEnglish ? "[ Decimal Converter Menu ]" : "[ Decimalni Konverter Meni ]";
+            string userInputInstructions = isEnglish ? "Enter your choice here: " : "Upišite vas izbor ovdje: ";
+            string footer = isEnglish ? "[ Please Enter Your Choice Below ]" : "[ Molim Unesite Vas Izbor Ispod ]";
+
+            List<string> consoleBoxMainTextContentList = new List<string>();
+            consoleBoxMainTextContentList.Add(isEnglish ? "[1] Main Menu" : "[1] Glavni Meni");
+            consoleBoxMainTextContentList.Add(isEnglish ? "[2] Convert Decimal Number" : "[2] Konvertuj Decimalni Broj");
+
+            consoleBoxBuilder(consoleLineWidth, header, consoleBoxMainTextContentList, footer, false);
+
+            Console.Write(userInputInstructions);
+        }
+        private static void decimalConverterMenu()
+        {
+            int min = 1;
+            int max = 2;
+            decimalConverterMenuMessage();
+            int selection = 0;
+            while (selection == 0)
+            {
+                selection = userInputForMenu(min, max);
+            }
+
+            switch (selection)
+            {
+                case 1:
+                    
+                    mainMenu();
+                    break;
+                case 2:
+                    
+                    // decimalConverter();
+                    break;
+            }
+
+        }
 
 
 
