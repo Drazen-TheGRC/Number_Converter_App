@@ -540,9 +540,23 @@ namespace Number_Converter_App
 
 
             List<string> consoleBoxMainTextContentList = new List<string>();
-
-            consoleBoxMainTextContentList.Add("Calculating the Integral Part of the number: ");
-            consoleBoxMainTextContentList.Add("");
+            string decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+            if (fractionalPart != 0)
+            {
+                
+                decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+                consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
+                consoleBoxMainTextContentList.Add("");
+                consoleBoxMainTextContentList.Add("Calculating the Integral Part of the number: ");
+                consoleBoxMainTextContentList.Add("");
+            }
+            else
+            {
+                
+                decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+                consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
+                consoleBoxMainTextContentList.Add("");
+            }
 
             // Adding all integralPart calculations
             while (tempIntegralPart > 0)
@@ -554,7 +568,7 @@ namespace Number_Converter_App
 
                 if (tempIntegralPart == integralPart)
                 {
-                    endText = "^ LSB";
+                    endText = "↑ LSB";
                 }
                 else if (resultForIntegralPart > 0)
                 {
@@ -592,101 +606,100 @@ namespace Number_Converter_App
             }
 
             // Adding all fractional part calculations
-            conversionResult += ".";
-            consoleBoxMainTextContentList.Add("");
-            consoleBoxMainTextContentList.Add("Calculating the Fractional Part of the number: ");
-            consoleBoxMainTextContentList.Add("");
 
-            int repetitions = 0;
+            
 
-            for(int i = 5; i > 0; i--)
+            if (fractionalPart!=0)
             {
-                resultForFractionalPart = (tempFractionalPart * 2);
+                conversionResult += ".";
+                consoleBoxMainTextContentList.Add("");
+                consoleBoxMainTextContentList.Add("Calculating the Fractional Part of the number: ");
+                consoleBoxMainTextContentList.Add("");
 
-                if (resultForFractionalPart >= 1)
+                int LengthOfFractionalPart = 8;
+
+                for (int i = LengthOfFractionalPart; i > 0; i--)
                 {
-                    reminderForFractionalPart = 1;
+                    resultForFractionalPart = (tempFractionalPart * 2);
+
+                    if (resultForFractionalPart >= 1)
+                    {
+                        reminderForFractionalPart = 1;
+                    }
+                    else
+                    {
+                        reminderForFractionalPart = 0;
+                    }
+
+
+
+                    conversionResult += reminderForFractionalPart;
+
+                    string conversionLine = tempFractionalPart.ToString();
+
+                    conversionLine += new string(' ', 8 - conversionLine.Length);
+                    conversionLine += "*";
+
+                    conversionLine += new string(' ', 16 - conversionLine.Length);
+                    conversionLine += "2";
+
+                    conversionLine += new string(' ', 24 - conversionLine.Length);
+                    conversionLine += "=";
+
+                    conversionLine += new string(' ', 32 - conversionLine.Length);
+                    conversionLine += resultForFractionalPart.ToString();
+
+                    conversionLine += new string(' ', 40 - conversionLine.Length);
+                    conversionLine += "R = " + reminderForFractionalPart.ToString();
+
+                    conversionLine += new string(' ', 48 - conversionLine.Length);
+
+                    if (i == LengthOfFractionalPart)
+                    {
+                        conversionLine += "| MSB";
+
+                    }
+                    else if (i > 1)
+                    {
+                        conversionLine += "|";
+                    }
+                    else
+                    {
+                        conversionLine += "↓ LSB";
+                    }
+
+                    if (resultForFractionalPart > 1)
+                    {
+                        tempFractionalPart = resultForFractionalPart - 1;
+
+                    }
+                    else if (resultForFractionalPart < 1)
+                    {
+                        tempFractionalPart = resultForFractionalPart;
+                    }
+                    else
+                    {
+                        tempFractionalPart = 0;
+                    }
+
+
+
+                    consoleBoxMainTextContentList.Add(conversionLine);
+
+                    // Breaks the loop in case tempFractionalPart == 0, that means there is no need to keep calculating
+                    if (tempFractionalPart == 0)
+                    {
+                        break;
+                    }
+
+
+
                 }
-                else
-                {
-                    reminderForFractionalPart = 0;
-                }
-
-
-
-                conversionResult += reminderForFractionalPart;
-
-                //if (tempIntegralPart == decimalNumber)
-                //{
-                //    endText = "^ LSB";
-                //}
-                //else if (resultForIntegralPart > 0)
-                //{
-                //    endText = "|";
-                //}
-                //else
-                //{
-                //    endText = "| MSB";
-                //}
-
-
-                string conversionLine = tempFractionalPart.ToString();
-
-                conversionLine += new string(' ', 8 - conversionLine.Length);
-                conversionLine += "*";
-
-                conversionLine += new string(' ', 16 - conversionLine.Length);
-                conversionLine += "2";
-
-                conversionLine += new string(' ', 24 - conversionLine.Length);
-                conversionLine += "=";
-
-                conversionLine += new string(' ', 32 - conversionLine.Length);
-                conversionLine += resultForFractionalPart.ToString();
-
-                conversionLine += new string(' ', 40 - conversionLine.Length);
-                conversionLine += "R = " + reminderForFractionalPart.ToString();
-
-                conversionLine += new string(' ', 48 - conversionLine.Length);
-                //conversionLine += endText;
-
-
-                if (resultForFractionalPart > 1)
-                {
-                    tempFractionalPart = resultForFractionalPart-1;
-                    
-                }
-                else if (resultForFractionalPart < 1)
-                {
-                    tempFractionalPart = resultForFractionalPart;
-                }
-                else
-                {
-                    tempFractionalPart = 0;
-                }
-
-                
-
-                consoleBoxMainTextContentList.Add(conversionLine);
-
-                // Breaks the loop in case tempFractionalPart == 0, that means there is no need to keep calculating
-                if (tempFractionalPart == 0)
-                {
-                    break;
-                }
-
-
-
             }
 
-
-
-
-
-
+            
 
             consoleBoxMainTextContentList.Add("");
-            string decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
             consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
             string binaryString = isEnglish ? "Binary number : " : "Binarni broj : ";
             consoleBoxMainTextContentList.Add(binaryString + new string(' ', 20 - binaryString.Length) + conversionResult);
