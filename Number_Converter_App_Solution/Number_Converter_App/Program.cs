@@ -516,7 +516,8 @@ namespace Number_Converter_App
 
         private static List<string> decimalToBinary(decimal decimalNumberInput)
         {
-            decimal decimalNumber = decimalNumberInput;
+            // Removing trailing zeros
+            decimal decimalNumber = decimal.Parse( decimalNumberInput.ToString("0.######"));
 
             int integralPart = (int)decimalNumber;
             decimal fractionalPart = decimalNumber - integralPart;
@@ -547,7 +548,7 @@ namespace Number_Converter_App
                 decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
                 consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
                 consoleBoxMainTextContentList.Add("");
-                consoleBoxMainTextContentList.Add("Calculating the Integral Part of the number: ");
+                consoleBoxMainTextContentList.Add(isEnglish ? "Converting the Integral Part of the number: " : "Konverzija cjelobrojnog dijela broja: " );
                 consoleBoxMainTextContentList.Add("");
             }
             else
@@ -559,24 +560,28 @@ namespace Number_Converter_App
             }
 
             // Adding all integralPart calculations
-            while (tempIntegralPart > 0)
+            do
             {
                 reminderForIntegralPart = tempIntegralPart % 2;
                 resultForIntegralPart = tempIntegralPart / 2;
 
                 conversionResult = conversionResult.Insert(0, reminderForIntegralPart.ToString());
 
-                if (tempIntegralPart == integralPart)
+                                
+                if (tempIntegralPart > 0 && resultForIntegralPart == 0 || tempIntegralPart == 0)
                 {
-                    endText = "↑ LSB";
-                }
-                else if (resultForIntegralPart > 0)
-                {
-                    endText = "|";
+                    endText = "| MSB";
                 }
                 else
                 {
-                    endText = "| MSB";
+                    if (integralPart == tempIntegralPart)
+                    {
+                        endText = "| LSB";
+                    }else
+                    {
+                        endText = "|";
+                    }
+                    
                 }
 
 
@@ -603,17 +608,17 @@ namespace Number_Converter_App
                 tempIntegralPart = resultForIntegralPart;
 
                 consoleBoxMainTextContentList.Add(conversionLine);
-            }
+            } while (tempIntegralPart > 0);
 
             // Adding all fractional part calculations
 
-            
+
 
             if (fractionalPart!=0)
             {
                 conversionResult += ".";
                 consoleBoxMainTextContentList.Add("");
-                consoleBoxMainTextContentList.Add("Calculating the Fractional Part of the number: ");
+                consoleBoxMainTextContentList.Add(isEnglish ? "Converting the Fractional Part of the number: " : "Konverzija decimalnog dijela broja: ");
                 consoleBoxMainTextContentList.Add("");
 
                 int LengthOfFractionalPart = 8;
@@ -665,7 +670,7 @@ namespace Number_Converter_App
                     }
                     else
                     {
-                        conversionLine += "↓ LSB";
+                        conversionLine += "| LSB";
                     }
 
                     if (resultForFractionalPart > 1)
@@ -691,8 +696,6 @@ namespace Number_Converter_App
                     {
                         break;
                     }
-
-
 
                 }
             }
