@@ -429,7 +429,7 @@ namespace Number_Converter_App
                 try
                 {
                     userInput = decimal.Parse(userInputString);
-                    if (userInput > 16777215 && userInput <= 0)
+                    if (userInput > 16777215 || userInput==0)
                     {
                         Console.WriteLine();
                         badInputMessage(userInputString);
