@@ -278,12 +278,12 @@ namespace Number_Converter_App
         {
             if (isEnglish)
             {
-                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   You entered: >   " + userInputString + "   < which is a valid option   <<<", '-', '-', true));
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   You entered: >   " + userInputString + "   < which is a valid input   <<<", '-', '-', true));
                 Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Thanks For Your Input   <<<", '-', '-', true));
             }
             else
             {
-                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Unijeli ste: >   " + userInputString + "   < sto je valjana opcija   <<<", '-', '-', true));
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Unijeli ste: >   " + userInputString + "   < sto je valjan unos   <<<", '-', '-', true));
                 Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Hvala na unosu   <<<", '-', '-', true));
             }
         }
@@ -292,12 +292,12 @@ namespace Number_Converter_App
         {
             if (isEnglish)
             {
-                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   You entered: >   " + userInputString + "   < which is NOT a valid option   <<<", '-', '-', true));
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   You entered: >   " + userInputString + "   < which is NOT a valid input   <<<", '-', '-', true));
                 Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Please try again   <<<", '-', '-', true));
             }
             else
             {
-                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Unijeli ste: >   " + userInputString + "   < sto NIJE valjana opcija   <<<", '-', '-', true));
+                Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Unijeli ste: >   " + userInputString + "   < sto NIJE valjan unos   <<<", '-', '-', true));
                 Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, ">>>   Molim pokusajte ponovo   <<<", '-', '-', true));
             }
         }
@@ -432,36 +432,28 @@ namespace Number_Converter_App
                     if (userInput > 16777215 && userInput <= 0)
                     {
                         Console.WriteLine();
-                        Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, isEnglish ? ">>>   There was an error, App will start from the previus menu   <<<" : ">>>   Dogodila se greška, applikacija će se nastaviti od predgodnog menija   <<<", '-', '-', true));
-                        Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, isEnglish ? ">>>   Please try again   <<<" : ">>>   Molim pokusajte ponovo   <<<", '-', '-', true));
+                        badInputMessage(userInputString);
                         Console.WriteLine();
                         decimalConverterMenu();
-
                     }
                 }
                 catch (Exception)
                 {
                     Console.WriteLine();
-                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, isEnglish ? ">>>   There was an error, App will start from the previus menu   <<<" : ">>>   Dogodila se greška, applikacija će se nastaviti od predgodnog menija   <<<", '-', '-', true));
-                    Console.WriteLine(consoleBoxLineBuilder(consoleLineWidth, isEnglish ? ">>>   Please try again   <<<" : ">>>   Molim pokusajte ponovo   <<<", '-', '-', true));
+                    badInputMessage(userInputString); 
                     Console.WriteLine();
                     decimalConverterMenu();
                 }
-
                 Console.WriteLine();
                 goodInputMessage(userInputString);
                 Console.WriteLine();
             }
             else
             {
-
-                // We need to say there was an error the app will go back for one menu
                 Console.WriteLine();
                 badInputMessage(userInputString);
                 Console.WriteLine();
-                inputDecimal();
-
-                
+                decimalConverterMenu();
             }
 
             return userInput;
