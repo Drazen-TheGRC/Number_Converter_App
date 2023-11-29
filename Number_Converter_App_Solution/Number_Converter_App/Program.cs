@@ -426,10 +426,11 @@ namespace Number_Converter_App
             Regex regex = new Regex(regexPattern);
             if (regex.IsMatch(userInputString))
             {
+                // This try catch block is unnecessary now with this updated regex, but I will leave it there for now
                 try
                 {
                     userInput = decimal.Parse(userInputString);
-                    if (userInput > 16777215 || userInput==0)
+                    if (userInput > 16777215 || userInput == 0)
                     {
                         Console.WriteLine();
                         badInputMessage(userInputString);
@@ -461,7 +462,7 @@ namespace Number_Converter_App
 
 
 
-        private static void decimalNumberConversionExplanation()
+        private static void decimalConverterMessage()
         {
             string header = isEnglish ? "[ Decimal Converter ]" : "[ Decimalni Konverter ]";
             string footer = isEnglish ? "[ Enter a decimal number below ]" : "[ Upišite decimalni broj u nastavku ]";
@@ -498,7 +499,7 @@ namespace Number_Converter_App
         }
         private static void decimalConverter()
         {
-            decimalNumberConversionExplanation();
+            decimalConverterMessage();
 
             decimal decimalNumber = inputDecimal();
 
@@ -509,11 +510,11 @@ namespace Number_Converter_App
 
                 consoleBoxBuilder(consoleLineWidth, header, decimalToBinary(decimalNumber), footer, false);
             }
-            //{
-            //    string header = isEnglish ? "[ Conversion of a Decimal to an Octal number ]" : "[ Konverzija Decimalnog u Oktalni broj ]";
-            //    string footer = isEnglish ? "[ ***** ]" : "[ ***** ]";
-            //    consoleBoxBuilder(consoleLineWidth, header, decimalToOctal(decimalNumber), footer, false);
-            //}
+            {
+                string header = isEnglish ? "[ Conversion of a Decimal to an Octal number ]" : "[ Konverzija Decimalnog u Oktalni broj ]";
+                string footer = isEnglish ? "[ ***** ]" : "[ ***** ]";
+                consoleBoxBuilder(consoleLineWidth, header, decimalToOctal(decimalNumber), footer, false);
+            }
             //{
             //    string header = isEnglish ? "[ Conversion of a Decimal to a Hexadecimal number ]" : "[ Konverzija Decimalnog u Heksadecimalni broj ]";
             //    string footer = isEnglish ? "[ ***** ]" : "[ ***** ]";
@@ -626,13 +627,11 @@ namespace Number_Converter_App
 
             // Adding all fractional part calculations
 
-
-
             if (fractionalPart!=0)
             {
                 conversionResult += ".";
                 consoleBoxMainTextContentList.Add("");
-                consoleBoxMainTextContentList.Add(isEnglish ? "Converting the Fractional Part of the number: " : "Konverzija decimalnog dijela broja: ");
+                consoleBoxMainTextContentList.Add(isEnglish ? "Converting the decimal point part of the number: " : "Konverzija decimalnog dijela broja: ");
                 consoleBoxMainTextContentList.Add("");
 
                 int LengthOfFractionalPart = 8;
@@ -714,8 +713,6 @@ namespace Number_Converter_App
                 }
             }
 
-            
-
             consoleBoxMainTextContentList.Add("");
             consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
             string binaryString = isEnglish ? "Binary number : " : "Binarni broj : ";
@@ -723,12 +720,27 @@ namespace Number_Converter_App
 
             return consoleBoxMainTextContentList;
         }
-        private static List<string> decimalToOctal(int decimalNumberInput)
+
+        private static List<string> decimalToOctal(decimal decimalNumberInput)
         {
-            int decimalNumber = decimalNumberInput;
-            int result;
-            int reminder;
-            int newDecimal = decimalNumber;
+            // Removing trailing zeros
+            decimal decimalNumber = decimal.Parse(decimalNumberInput.ToString("0.######"));
+
+            int integralPart = (int)decimalNumber;
+            decimal fractionalPart = decimalNumber - integralPart;
+
+
+            // used for calculations of the integralPart
+            int resultForIntegralPart;
+            int reminderForIntegralPart;
+
+            // used for the calculations of the fractionalPart
+            decimal resultForFractionalPart;
+            int reminderForFractionalPart;
+
+
+            int tempIntegralPart = integralPart;
+            decimal tempFractionalPart = fractionalPart;
 
             string conversionResult = "";
             string endText;
@@ -736,29 +748,52 @@ namespace Number_Converter_App
 
 
             List<string> consoleBoxMainTextContentList = new List<string>();
-
-            while (newDecimal > 0)
+            string decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+            if (fractionalPart != 0)
             {
-                reminder = newDecimal % 8;
-                result = newDecimal / 8;
 
-                conversionResult = conversionResult.Insert(0, reminder.ToString());
+                decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+                consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
+                consoleBoxMainTextContentList.Add("");
+                consoleBoxMainTextContentList.Add(isEnglish ? "Converting the Integral Part of the number: " : "Konverzija cjelobrojnog dijela broja: ");
+                consoleBoxMainTextContentList.Add("");
+            }
+            else
+            {
 
-                if (newDecimal == decimalNumber)
-                {
-                    endText = "^ LSB";
-                }
-                else if (result > 0)
-                {
-                    endText = "|";
-                }
-                else
+                decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+                consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
+                consoleBoxMainTextContentList.Add("");
+            }
+
+            // Adding all integralPart calculations
+            do
+            {
+                reminderForIntegralPart = tempIntegralPart % 8;
+                resultForIntegralPart = tempIntegralPart / 8;
+
+                conversionResult = conversionResult.Insert(0, reminderForIntegralPart.ToString());
+
+
+                if (tempIntegralPart > 0 && resultForIntegralPart == 0 || tempIntegralPart == 0)
                 {
                     endText = "| MSB";
                 }
+                else
+                {
+                    if (integralPart == tempIntegralPart)
+                    {
+                        endText = "| LSB";
+                    }
+                    else
+                    {
+                        endText = "|";
+                    }
+
+                }
 
 
-                string conversionLine = newDecimal.ToString();
+                string conversionLine = tempIntegralPart.ToString();
 
                 conversionLine += new string(' ', 8 - conversionLine.Length);
                 conversionLine += "÷";
@@ -770,128 +805,238 @@ namespace Number_Converter_App
                 conversionLine += "=";
 
                 conversionLine += new string(' ', 32 - conversionLine.Length);
-                conversionLine += result.ToString();
+                conversionLine += resultForIntegralPart.ToString();
 
                 conversionLine += new string(' ', 40 - conversionLine.Length);
-                conversionLine += "R = " + reminder.ToString();
+                conversionLine += "R = " + reminderForIntegralPart.ToString();
 
                 conversionLine += new string(' ', 48 - conversionLine.Length);
                 conversionLine += endText;
 
-                newDecimal = result;
+                tempIntegralPart = resultForIntegralPart;
 
                 consoleBoxMainTextContentList.Add(conversionLine);
-            }
+            } while (tempIntegralPart > 0);
 
-            consoleBoxMainTextContentList.Add("");
-            string decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
-            consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
-            string octaString = isEnglish ? "Octal number : " : "Oktalni broj : ";
-            consoleBoxMainTextContentList.Add(octaString + new string(' ', 20 - octaString.Length) + conversionResult);
+            // Adding all fractional part calculations
 
-            return consoleBoxMainTextContentList;
-        }
-        private static List<string> decimalToHexadecimal(int decimalNumberInput)
-        {
-            int decimalNumber = decimalNumberInput;
-            int result;
-            int reminder;
-
-            string reminderString;
-
-            int newDecimal = decimalNumber;
-
-            string conversionResult = "";
-            string endText;
-
-
-
-            List<string> consoleBoxMainTextContentList = new List<string>();
-
-            while (newDecimal > 0)
+            if (fractionalPart != 0)
             {
-                reminder = newDecimal % 16;
-                result = newDecimal / 16;
+                conversionResult += ".";
+                consoleBoxMainTextContentList.Add("");
+                consoleBoxMainTextContentList.Add(isEnglish ? "Converting the decimal point part of the number: " : "Konverzija decimalnog dijela broja: ");
+                consoleBoxMainTextContentList.Add("");
 
-                if (reminder == 15)
+                int LengthOfFractionalPart = 8;
+
+                for (int i = LengthOfFractionalPart; i > 0; i--)
                 {
-                    reminderString = "F";
+                    resultForFractionalPart = (tempFractionalPart * 8);
+
+                    if (resultForFractionalPart >= 1)
+                    {
+                        reminderForFractionalPart = (int)resultForFractionalPart;
+                    }
+                    else
+                    {
+                        reminderForFractionalPart = 0;
+                    }
+
+
+
+                    conversionResult += reminderForFractionalPart;
+
+                    string conversionLine = tempFractionalPart.ToString();
+
+                    conversionLine += new string(' ', 8 - conversionLine.Length);
+                    conversionLine += "*";
+
+                    conversionLine += new string(' ', 16 - conversionLine.Length);
+                    conversionLine += "8";
+
+                    conversionLine += new string(' ', 24 - conversionLine.Length);
+                    conversionLine += "=";
+
+                    conversionLine += new string(' ', 32 - conversionLine.Length);
+                    conversionLine += resultForFractionalPart.ToString();
+
+                    conversionLine += new string(' ', 40 - conversionLine.Length);
+                    conversionLine += "R = " + reminderForFractionalPart.ToString();
+
+                    conversionLine += new string(' ', 48 - conversionLine.Length);
+
+                    if (i == LengthOfFractionalPart)
+                    {
+                        conversionLine += "| MSB";
+
+                    }
+                    else if (i > 1)
+                    {
+                        conversionLine += "|";
+                    }
+                    else
+                    {
+                        conversionLine += "| LSB";
+                    }
+
+                    if (resultForFractionalPart > 1)
+                    {
+                        tempFractionalPart = resultForFractionalPart - reminderForFractionalPart;
+
+                    }
+                    else if (resultForFractionalPart < 1)
+                    {
+                        tempFractionalPart = resultForFractionalPart;
+                    }
+                    else
+                    {
+                        tempFractionalPart = 0;
+                    }
+
+
+
+                    consoleBoxMainTextContentList.Add(conversionLine);
+
+                    // Breaks the loop in case tempFractionalPart == 0, that means there is no need to keep calculating
+                    if (tempFractionalPart == 0)
+                    {
+                        break;
+                    }
+
                 }
-                else if (reminder == 14)
-                {
-                    reminderString = "E";
-                }
-                else if (reminder == 13)
-                {
-
-                    reminderString = "D";
-                }
-                else if (reminder == 12)
-                {
-                    reminderString = "C";
-                }
-                else if (reminder == 11)
-                {
-                    reminderString = "B";
-                }
-                else if (reminder == 10)
-                {
-                    reminderString = "A";
-                }
-                else
-                {
-                    reminderString = reminder.ToString();
-                }
-
-                conversionResult = conversionResult.Insert(0, reminderString);
-
-                if (newDecimal == decimalNumber)
-                {
-                    endText = "^ LSB";
-                }
-                else if (result > 0)
-                {
-                    endText = "|";
-                }
-                else
-                {
-                    endText = "| MSB";
-                }
-
-
-                string conversionLine = newDecimal.ToString();
-
-                conversionLine += new string(' ', 8 - conversionLine.Length);
-                conversionLine += "÷";
-
-                conversionLine += new string(' ', 16 - conversionLine.Length);
-                conversionLine += "16";
-
-                conversionLine += new string(' ', 24 - conversionLine.Length);
-                conversionLine += "=";
-
-                conversionLine += new string(' ', 32 - conversionLine.Length);
-                conversionLine += result.ToString();
-
-                conversionLine += new string(' ', 40 - conversionLine.Length);
-                conversionLine += "R = " + reminder.ToString() + (reminder > 9 ? " -> " + reminderString : "  -> " + reminder.ToString());
-
-                conversionLine += new string(' ', 54 - conversionLine.Length);
-                conversionLine += endText;
-
-                newDecimal = result;
-
-                consoleBoxMainTextContentList.Add(conversionLine);
             }
 
             consoleBoxMainTextContentList.Add("");
-            string decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
-            consoleBoxMainTextContentList.Add(decString + new string(' ', 24 - decString.Length) + decimalNumber.ToString());
-            string hexaString = isEnglish ? "Hexadecimal number : " : "Heksadecimalni broj : ";
-            consoleBoxMainTextContentList.Add(hexaString + new string(' ', 24 - hexaString.Length) + conversionResult);
+            consoleBoxMainTextContentList.Add(decString + new string(' ', 20 - decString.Length) + decimalNumber.ToString());
+            string binaryString = isEnglish ? "Binary number : " : "Binarni broj : ";
+            consoleBoxMainTextContentList.Add(binaryString + new string(' ', 20 - binaryString.Length) + conversionResult);
 
             return consoleBoxMainTextContentList;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //private static List<string> decimalToHexadecimal(int decimalNumberInput)
+        //{
+        //    int decimalNumber = decimalNumberInput;
+        //    int result;
+        //    int reminder;
+
+        //    string reminderString;
+
+        //    int newDecimal = decimalNumber;
+
+        //    string conversionResult = "";
+        //    string endText;
+
+
+
+        //    List<string> consoleBoxMainTextContentList = new List<string>();
+
+        //    while (newDecimal > 0)
+        //    {
+        //        reminder = newDecimal % 16;
+        //        result = newDecimal / 16;
+
+        //        if (reminder == 15)
+        //        {
+        //            reminderString = "F";
+        //        }
+        //        else if (reminder == 14)
+        //        {
+        //            reminderString = "E";
+        //        }
+        //        else if (reminder == 13)
+        //        {
+
+        //            reminderString = "D";
+        //        }
+        //        else if (reminder == 12)
+        //        {
+        //            reminderString = "C";
+        //        }
+        //        else if (reminder == 11)
+        //        {
+        //            reminderString = "B";
+        //        }
+        //        else if (reminder == 10)
+        //        {
+        //            reminderString = "A";
+        //        }
+        //        else
+        //        {
+        //            reminderString = reminder.ToString();
+        //        }
+
+        //        conversionResult = conversionResult.Insert(0, reminderString);
+
+        //        if (newDecimal == decimalNumber)
+        //        {
+        //            endText = "^ LSB";
+        //        }
+        //        else if (result > 0)
+        //        {
+        //            endText = "|";
+        //        }
+        //        else
+        //        {
+        //            endText = "| MSB";
+        //        }
+
+
+        //        string conversionLine = newDecimal.ToString();
+
+        //        conversionLine += new string(' ', 8 - conversionLine.Length);
+        //        conversionLine += "÷";
+
+        //        conversionLine += new string(' ', 16 - conversionLine.Length);
+        //        conversionLine += "16";
+
+        //        conversionLine += new string(' ', 24 - conversionLine.Length);
+        //        conversionLine += "=";
+
+        //        conversionLine += new string(' ', 32 - conversionLine.Length);
+        //        conversionLine += result.ToString();
+
+        //        conversionLine += new string(' ', 40 - conversionLine.Length);
+        //        conversionLine += "R = " + reminder.ToString() + (reminder > 9 ? " -> " + reminderString : "  -> " + reminder.ToString());
+
+        //        conversionLine += new string(' ', 54 - conversionLine.Length);
+        //        conversionLine += endText;
+
+        //        newDecimal = result;
+
+        //        consoleBoxMainTextContentList.Add(conversionLine);
+        //    }
+
+        //    consoleBoxMainTextContentList.Add("");
+        //    string decString = isEnglish ? "Decimal number : " : "Decimalni broj : ";
+        //    consoleBoxMainTextContentList.Add(decString + new string(' ', 24 - decString.Length) + decimalNumber.ToString());
+        //    string hexaString = isEnglish ? "Hexadecimal number : " : "Heksadecimalni broj : ";
+        //    consoleBoxMainTextContentList.Add(hexaString + new string(' ', 24 - hexaString.Length) + conversionResult);
+
+        //    return consoleBoxMainTextContentList;
+        //}
 
 
 
