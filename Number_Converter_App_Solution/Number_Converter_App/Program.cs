@@ -418,7 +418,7 @@ namespace Number_Converter_App
             Console.WriteLine();
             // I added a limit so as not to cause issues on two ends, firstly I don't want the number of digits to mess up my presentation in the console,
             //Secondly I want to make sure the number fits into the int32. Why 16777215 because it is 8 digits long and it is the largest number in hexadecimal equivalent FFFFFF
-            Console.Write(isEnglish ? "Please enter a decimal number less than 16777215: " : "Molim vas upišite decimalni broj manji od 16777215: ");
+            Console.Write(isEnglish ? "Please enter a decimal number: " : "Molim vas upišite decimalni broj: ");
 
             string userInputString = Console.ReadLine();
 
@@ -475,10 +475,32 @@ namespace Number_Converter_App
             string footer = isEnglish ? "[ Enter a decimal number below ]" : "[ Upišite decimalni broj u nastavku ]";
 
             List<string> consoleBoxMainTextContentList = new List<string>();
-            consoleBoxMainTextContentList.Add(isEnglish ? "explain decimal conversions " : "objasniti konverzije decimalnog broja");
-            consoleBoxMainTextContentList.Add(isEnglish ? "" : "");
-            consoleBoxMainTextContentList.Add(isEnglish ? "" : "");
-            consoleBoxMainTextContentList.Add(isEnglish ? "" : "");
+            consoleBoxMainTextContentList.Add(isEnglish ?
+                "Acceptable decimal number inputs: " :
+                "Prihvatljivi decimalni brojevi: ");
+            consoleBoxMainTextContentList.Add(isEnglish ?
+                "Positive numbers up to 16777215." :
+                "Pozitivni brojevi do broja 16777215.");
+            consoleBoxMainTextContentList.Add(isEnglish ?
+                "Numbers can have up to 5 fractional digits. e.g. 155.55555" :
+                "Brojevi mogu imati do 5 cifara iza zareza. npr: 155.55555");
+            consoleBoxMainTextContentList.Add("");
+
+            consoleBoxMainTextContentList.Add(isEnglish ?
+                "Examples: " :
+                "Primjeri: ");
+            consoleBoxMainTextContentList.Add("155");
+            consoleBoxMainTextContentList.Add("155.00");
+            consoleBoxMainTextContentList.Add("155.55555");
+            consoleBoxMainTextContentList.Add("0.55555");
+            consoleBoxMainTextContentList.Add("");
+            consoleBoxMainTextContentList.Add(isEnglish ?
+                "Fractional part of the conversion is rounded at 8 digits." :
+                "Decimalni dio konverzije je zaokružen na 8 cifara.");
+            consoleBoxMainTextContentList.Add(isEnglish ?
+                "Examples: 155.55555 converts to 10011011.10001110" :
+                "Primjer: 155.55555 se konvertuje u 10011011.10001110");
+
 
             consoleBoxBuilder(consoleLineWidth, header, consoleBoxMainTextContentList, footer, false);
         }
