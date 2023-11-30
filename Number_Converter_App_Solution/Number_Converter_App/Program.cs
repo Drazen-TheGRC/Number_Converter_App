@@ -602,22 +602,22 @@ namespace Number_Converter_App
 
                 string conversionLine = tempIntegralPart.ToString();
 
-                conversionLine += new string(' ', 8 - conversionLine.Length);
+                conversionLine += new string(' ', 10 - conversionLine.Length);
                 conversionLine += "÷";
 
-                conversionLine += new string(' ', 16 - conversionLine.Length);
+                conversionLine += new string(' ', 14 - conversionLine.Length);
                 conversionLine += "2";
 
-                conversionLine += new string(' ', 24 - conversionLine.Length);
+                conversionLine += new string(' ', 18 - conversionLine.Length);
                 conversionLine += "=";
 
-                conversionLine += new string(' ', 32 - conversionLine.Length);
+                conversionLine += new string(' ', 22 - conversionLine.Length);
                 conversionLine += resultForIntegralPart.ToString();
 
-                conversionLine += new string(' ', 40 - conversionLine.Length);
+                conversionLine += new string(' ', 32 - conversionLine.Length);
                 conversionLine += "R = " + reminderForIntegralPart.ToString();
 
-                conversionLine += new string(' ', 48 - conversionLine.Length);
+                conversionLine += new string(' ', 45 - conversionLine.Length);
                 conversionLine += endText;
 
                 tempIntegralPart = resultForIntegralPart;
@@ -655,22 +655,22 @@ namespace Number_Converter_App
 
                     string conversionLine = tempFractionalPart.ToString();
 
-                    conversionLine += new string(' ', 8 - conversionLine.Length);
+                    conversionLine += new string(' ', 10 - conversionLine.Length);
                     conversionLine += "*";
 
-                    conversionLine += new string(' ', 16 - conversionLine.Length);
+                    conversionLine += new string(' ', 14 - conversionLine.Length);
                     conversionLine += "2";
 
-                    conversionLine += new string(' ', 24 - conversionLine.Length);
+                    conversionLine += new string(' ', 18 - conversionLine.Length);
                     conversionLine += "=";
 
-                    conversionLine += new string(' ', 32 - conversionLine.Length);
+                    conversionLine += new string(' ', 22 - conversionLine.Length);
                     conversionLine += resultForFractionalPart.ToString();
 
-                    conversionLine += new string(' ', 40 - conversionLine.Length);
+                    conversionLine += new string(' ', 32 - conversionLine.Length);
                     conversionLine += "R = " + reminderForFractionalPart.ToString();
 
-                    conversionLine += new string(' ', 48 - conversionLine.Length);
+                    conversionLine += new string(' ', 45 - conversionLine.Length);
 
                     if (i == LengthOfFractionalPart)
                     {
@@ -795,22 +795,22 @@ namespace Number_Converter_App
 
                 string conversionLine = tempIntegralPart.ToString();
 
-                conversionLine += new string(' ', 8 - conversionLine.Length);
+                conversionLine += new string(' ', 10 - conversionLine.Length);
                 conversionLine += "÷";
 
-                conversionLine += new string(' ', 16 - conversionLine.Length);
+                conversionLine += new string(' ', 14 - conversionLine.Length);
                 conversionLine += "8";
 
-                conversionLine += new string(' ', 24 - conversionLine.Length);
+                conversionLine += new string(' ', 18 - conversionLine.Length);
                 conversionLine += "=";
 
-                conversionLine += new string(' ', 32 - conversionLine.Length);
+                conversionLine += new string(' ', 22 - conversionLine.Length);
                 conversionLine += resultForIntegralPart.ToString();
 
-                conversionLine += new string(' ', 40 - conversionLine.Length);
+                conversionLine += new string(' ', 32 - conversionLine.Length);
                 conversionLine += "R = " + reminderForIntegralPart.ToString();
 
-                conversionLine += new string(' ', 48 - conversionLine.Length);
+                conversionLine += new string(' ', 45 - conversionLine.Length);
                 conversionLine += endText;
 
                 tempIntegralPart = resultForIntegralPart;
@@ -848,22 +848,22 @@ namespace Number_Converter_App
 
                     string conversionLine = tempFractionalPart.ToString();
 
-                    conversionLine += new string(' ', 8 - conversionLine.Length);
+                    conversionLine += new string(' ', 10 - conversionLine.Length);
                     conversionLine += "*";
 
-                    conversionLine += new string(' ', 16 - conversionLine.Length);
+                    conversionLine += new string(' ', 14 - conversionLine.Length);
                     conversionLine += "8";
 
-                    conversionLine += new string(' ', 24 - conversionLine.Length);
+                    conversionLine += new string(' ', 18 - conversionLine.Length);
                     conversionLine += "=";
 
-                    conversionLine += new string(' ', 32 - conversionLine.Length);
+                    conversionLine += new string(' ', 22 - conversionLine.Length);
                     conversionLine += resultForFractionalPart.ToString();
 
-                    conversionLine += new string(' ', 40 - conversionLine.Length);
+                    conversionLine += new string(' ', 32 - conversionLine.Length);
                     conversionLine += "R = " + reminderForFractionalPart.ToString();
 
-                    conversionLine += new string(' ', 48 - conversionLine.Length);
+                    conversionLine += new string(' ', 45 - conversionLine.Length);
 
                     if (i == LengthOfFractionalPart)
                     {
@@ -1024,22 +1024,22 @@ namespace Number_Converter_App
 
                 string conversionLine = tempIntegralPart.ToString();
 
-                conversionLine += new string(' ', 8 - conversionLine.Length);
+                conversionLine += new string(' ', 10 - conversionLine.Length);
                 conversionLine += "÷";
 
-                conversionLine += new string(' ', 16 - conversionLine.Length);
+                conversionLine += new string(' ', 14 - conversionLine.Length);
                 conversionLine += "16";
 
-                conversionLine += new string(' ', 24 - conversionLine.Length);
+                conversionLine += new string(' ', 18 - conversionLine.Length);
                 conversionLine += "=";
 
-                conversionLine += new string(' ', 32 - conversionLine.Length);
+                conversionLine += new string(' ', 22 - conversionLine.Length);
                 conversionLine += resultForIntegralPart.ToString();
 
-                conversionLine += new string(' ', 40 - conversionLine.Length);
-                conversionLine += "R = " + reminderForIntegralPart.ToString();
+                conversionLine += new string(' ', 32 - conversionLine.Length);
+                conversionLine += "R = " + reminderForIntegralPart.ToString() +(reminderForIntegralPart > 9 ? " -> " + reminderForIntegralPartString : "  -> " + reminderForIntegralPart.ToString());
 
-                conversionLine += new string(' ', 48 - conversionLine.Length);
+                conversionLine += new string(' ', 45 - conversionLine.Length);
                 conversionLine += endText;
 
                 tempIntegralPart = resultForIntegralPart;
@@ -1106,22 +1106,22 @@ namespace Number_Converter_App
 
                     string conversionLine = tempFractionalPart.ToString();
 
-                    conversionLine += new string(' ', 8 - conversionLine.Length);
+                    conversionLine += new string(' ', 10 - conversionLine.Length);
                     conversionLine += "*";
 
-                    conversionLine += new string(' ', 16 - conversionLine.Length);
+                    conversionLine += new string(' ', 14 - conversionLine.Length);
                     conversionLine += "16";
 
-                    conversionLine += new string(' ', 24 - conversionLine.Length);
+                    conversionLine += new string(' ', 18 - conversionLine.Length);
                     conversionLine += "=";
 
-                    conversionLine += new string(' ', 32 - conversionLine.Length);
+                    conversionLine += new string(' ', 22 - conversionLine.Length);
                     conversionLine += resultForFractionalPart.ToString();
 
-                    conversionLine += new string(' ', 40 - conversionLine.Length);
-                    conversionLine += "R = " + reminderForFractionalPart.ToString();
+                    conversionLine += new string(' ', 32 - conversionLine.Length);
+                    conversionLine += "R = " + reminderForFractionalPart.ToString() + (reminderForFractionalPart > 9 ? " -> " + reminderForFractionalPartString : "  -> " + reminderForFractionalPart.ToString());
 
-                    conversionLine += new string(' ', 48 - conversionLine.Length);
+                    conversionLine += new string(' ', 45 - conversionLine.Length);
 
                     if (i == LengthOfFractionalPart)
                     {
