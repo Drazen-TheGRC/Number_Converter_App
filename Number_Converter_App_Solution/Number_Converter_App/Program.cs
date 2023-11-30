@@ -585,13 +585,13 @@ namespace Number_Converter_App
                                 
                 if (tempIntegralPart > 0 && resultForIntegralPart == 0 || tempIntegralPart == 0)
                 {
-                    endText = "| MSB";
+                    endText = isEnglish ? "| MSB" : "| Cifra najveće težine";
                 }
                 else
                 {
                     if (integralPart == tempIntegralPart)
                     {
-                        endText = "| LSB";
+                        endText = isEnglish ? "| LSB" : "| Cifra najmanje težine";
                     }else
                     {
                         endText = "|";
@@ -674,7 +674,7 @@ namespace Number_Converter_App
 
                     if (i == LengthOfFractionalPart)
                     {
-                        conversionLine += "| MSB";
+                        conversionLine += isEnglish ? "| MSB" : "| Cifra najveće težine";
 
                     }
                     else if (i > 1)
@@ -683,7 +683,7 @@ namespace Number_Converter_App
                     }
                     else
                     {
-                        conversionLine += "| LSB";
+                        conversionLine += isEnglish ? "| LSB" : "| Cifra najmanje težine";
                     }
 
                     if (resultForFractionalPart > 1)
@@ -777,13 +777,13 @@ namespace Number_Converter_App
 
                 if (tempIntegralPart > 0 && resultForIntegralPart == 0 || tempIntegralPart == 0)
                 {
-                    endText = "| MSB";
+                    endText = isEnglish ? "| MSB" : "| Cifra najveće težine";
                 }
                 else
                 {
                     if (integralPart == tempIntegralPart)
                     {
-                        endText = "| LSB";
+                        endText = isEnglish ? "| LSB" : "| Cifra najmanje težine";
                     }
                     else
                     {
@@ -867,7 +867,7 @@ namespace Number_Converter_App
 
                     if (i == LengthOfFractionalPart)
                     {
-                        conversionLine += "| MSB";
+                        conversionLine += isEnglish ? "| MSB" : "| Cifra najveće težine";
 
                     }
                     else if (i > 1)
@@ -876,7 +876,7 @@ namespace Number_Converter_App
                     }
                     else
                     {
-                        conversionLine += "| LSB";
+                        conversionLine += isEnglish ? "| LSB" : "| Cifra najmanje težine";
                     }
 
                     if (resultForFractionalPart > 1)
@@ -1006,13 +1006,13 @@ namespace Number_Converter_App
 
                 if (tempIntegralPart > 0 && resultForIntegralPart == 0 || tempIntegralPart == 0)
                 {
-                    endText = "| MSB";
+                    endText = isEnglish ? "| MSB" : "| Cifra najveće težine";
                 }
                 else
                 {
                     if (integralPart == tempIntegralPart)
                     {
-                        endText = "| LSB";
+                        endText = isEnglish ? "| LSB" : "| Cifra najmanje težine";
                     }
                     else
                     {
@@ -1125,7 +1125,7 @@ namespace Number_Converter_App
 
                     if (i == LengthOfFractionalPart)
                     {
-                        conversionLine += "| MSB";
+                        conversionLine += isEnglish ? "| MSB" : "| Cifra najveće težine";
 
                     }
                     else if (i > 1)
@@ -1134,7 +1134,7 @@ namespace Number_Converter_App
                     }
                     else
                     {
-                        conversionLine += "| LSB";
+                        conversionLine += isEnglish ? "| LSB" : "| Cifra najmanje težine";
                     }
 
                     if (resultForFractionalPart > 1)
